@@ -21,6 +21,8 @@
 		F88BF809179DA07B00173D18 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F88BF7EB179DA07B00173D18 /* UIKit.framework */; };
 		F88BF811179DA07B00173D18 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F88BF80F179DA07B00173D18 /* InfoPlist.strings */; };
 		F88BF813179DA07B00173D18 /* MazeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F88BF812179DA07B00173D18 /* MazeTests.m */; };
+		F88BF81E179DA94700173D18 /* MazeScene.m in Sources */ = {isa = PBXBuildFile; fileRef = F88BF81D179DA94700173D18 /* MazeScene.m */; };
+		F88BF820179DAA4500173D18 /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F88BF81F179DAA4500173D18 /* SpriteKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,9 @@
 		F88BF80E179DA07B00173D18 /* MazeTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MazeTests-Info.plist"; sourceTree = "<group>"; };
 		F88BF810179DA07B00173D18 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F88BF812179DA07B00173D18 /* MazeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MazeTests.m; sourceTree = "<group>"; };
+		F88BF81C179DA94700173D18 /* MazeScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MazeScene.h; sourceTree = "<group>"; };
+		F88BF81D179DA94700173D18 /* MazeScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MazeScene.m; sourceTree = "<group>"; };
+		F88BF81F179DAA4500173D18 /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +65,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F88BF820179DAA4500173D18 /* SpriteKit.framework in Frameworks */,
 				F88BF7EA179DA07B00173D18 /* CoreGraphics.framework in Frameworks */,
 				F88BF7EC179DA07B00173D18 /* UIKit.framework in Frameworks */,
 				F88BF7E8179DA07B00173D18 /* Foundation.framework in Frameworks */,
@@ -101,6 +107,7 @@
 		F88BF7E6179DA07B00173D18 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F88BF81F179DAA4500173D18 /* SpriteKit.framework */,
 				F88BF7E7179DA07B00173D18 /* Foundation.framework */,
 				F88BF7E9179DA07B00173D18 /* CoreGraphics.framework */,
 				F88BF7EB179DA07B00173D18 /* UIKit.framework */,
@@ -117,6 +124,8 @@
 				F88BF7F9179DA07B00173D18 /* Main.storyboard */,
 				F88BF7FC179DA07B00173D18 /* jslViewController.h */,
 				F88BF7FD179DA07B00173D18 /* jslViewController.m */,
+				F88BF81C179DA94700173D18 /* MazeScene.h */,
+				F88BF81D179DA94700173D18 /* MazeScene.m */,
 				F88BF7FF179DA07B00173D18 /* Images.xcassets */,
 				F88BF7EE179DA07B00173D18 /* Supporting Files */,
 			);
@@ -251,6 +260,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F88BF7F8179DA07B00173D18 /* jslAppDelegate.m in Sources */,
+				F88BF81E179DA94700173D18 /* MazeScene.m in Sources */,
 				F88BF7F4179DA07B00173D18 /* main.m in Sources */,
 				F88BF7FE179DA07B00173D18 /* jslViewController.m in Sources */,
 			);
@@ -378,6 +388,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Maze/Maze-Prefix.pch";
 				INFOPLIST_FILE = "Maze/Maze-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -391,6 +402,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Maze/Maze-Prefix.pch";
 				INFOPLIST_FILE = "Maze/Maze-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

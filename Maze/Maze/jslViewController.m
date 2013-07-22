@@ -7,9 +7,9 @@
 //
 
 #import "jslViewController.h"
-
+#import <SpriteKit/SpriteKit.h>
+#import "MazeScene.h"
 @interface jslViewController ()
-
 @end
 
 @implementation jslViewController
@@ -17,13 +17,23 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+    SKView *gameView = (SKView *)self.view;
+    
+    gameView.showsDrawCount= YES;
+    
+    gameView.showsNodeCount = YES;
+    
+    gameView.showsFPS = YES;
 }
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+- (void)viewWillAppear:(BOOL)animated
+{
+    MazeScene* maze = [[MazeScene alloc]initWithSize:CGSizeMake(768, 1024)];
+    SKView *gameView = (SKView *)self.view;
+    [gameView presentScene:maze];
+}
 @end
