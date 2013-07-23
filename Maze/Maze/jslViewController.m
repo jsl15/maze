@@ -32,7 +32,7 @@
 }
 - (void)viewWillAppear:(BOOL)animated
 {
-    MazeScene* maze = [[MazeScene alloc]initWithSize:CGSizeMake(768, 1024)];
+    MazeScene* maze = [[MazeScene alloc]initWithSize:CGSizeMake(640, 1136)];
     SKView *gameView = (SKView *)self.view;
     [gameView presentScene:maze];
 }

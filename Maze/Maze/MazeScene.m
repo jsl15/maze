@@ -12,116 +12,171 @@
 
 {
     BOOL _isMoving;
+    UITouch *_lastTouch;
 }
 @property BOOL contentCreated;
 @property SKSpriteNode *dot;
 @end
 @implementation MazeScene
+
 - (void)didMoveToView: (SKView *)view
 {
     if (!self.contentCreated){
         [self createContents];
         self.contentCreated = YES;
+
         _isMoving = NO;
+        _lastTouch = nil;
        // self.physicsWorld.contactDelegate = self;
-       self.anchorPoint = CGPointMake(0, 0);
-        self.physicsWorld.gravity = CGPointMake(1, 0);
+        self.physicsWorld.gravity = CGPointMake(0, 0);
+        self.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:self.frame];
+
         
     }
 }
 
 - (void)createContents
 {
+    
     self.backgroundColor = [SKColor whiteColor];
     self.scaleMode = SKSceneScaleModeAspectFill;
-    SKSpriteNode *maze = [self createMaze];
-    maze.position = CGPointMake(CGRectGetMidX(self.frame), 300);
-    [self addChild:maze];
+    [self createMaze];
     
+
     self.dot = [self createDot];
-    self.dot.position = CGPointMake(100, 100);
+    self.dot.position = CGPointMake(20, 20);
     self.dot.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.dot.size];
     self.dot.physicsBody.usesPreciseCollisionDetection = YES;
-    //self.dot.anchorPoint = CGPointMake(0.5, 0.5);
     [self addChild:self.dot];
+
     
 }
-- (SKSpriteNode *)createMaze
+- (void)createMaze
 {
-    CGSize screenSize = [UIScreen mainScreen].bounds.size;
-    SKSpriteNode *maze = [[SKSpriteNode alloc]initWithColor:[SKColor blackColor] size:CGSizeMake(screenSize.width *.1, self.frame.size.height)];
-    maze.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:CGRectMake(0, 0, screenSize.width *.1, screenSize.height).size];
+    SKSpriteNode *maze = [[SKSpriteNode alloc]initWithColor:[SKColor orangeColor] size:CGSizeMake(100, 200)];
+    maze.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:maze.size];
     maze.physicsBody.dynamic = NO;
-    maze.anchorPoint = CGPointMake(0.5, 0.5);
-    return maze;
+    maze.position = CGPointMake(100, 30);
+    [self addChild:maze];
+    
+    SKSpriteNode *wall = [[SKSpriteNode alloc]initWithColor:[SKColor orangeColor] size:CGSizeMake(100, 400)];
+    wall.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:wall.size];
+    wall.physicsBody.dynamic = NO;
+    wall.position = CGPointMake(200, 250);
+    [self addChild:wall];
+    
+    SKSpriteNode *wall2 = [[SKSpriteNode alloc]initWithColor:[SKColor orangeColor] size:CGSizeMake(50, 300)];
+    wall2.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:wall2.size];
+    wall2.physicsBody.dynamic = NO;
+    wall2.position = CGPointMake(50, self.frame.size.height - 150);
+    [self addChild:wall2];
+    
+    SKSpriteNode *wall3 = [[SKSpriteNode alloc] initWithColor:[SKColor orangeColor] size:CGSizeMake(100, 600)];
+    wall3.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:wall3.size];
+    wall3.physicsBody.dynamic = NO;
+    wall3.position = CGPointMake(200, self.frame.size.height - 350 );
+
+    [self addChild:wall3];
+    
+    SKSpriteNode *wall4 = [[SKSpriteNode alloc] initWithColor:[SKColor orangeColor] size:CGSizeMake(100, 800)];
+    wall4.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:wall4.size];
+    wall4.physicsBody.dynamic = NO;
+    wall4.position = CGPointMake(350, 400);
+    
+    [self addChild:wall4];
+    
+    
+    SKSpriteNode *wall5 = [[SKSpriteNode alloc] initWithColor:[SKColor orangeColor] size:CGSizeMake(25, 800)];
+    wall5.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:wall5.size];
+    wall5.physicsBody.dynamic = NO;
+    wall5.position = CGPointMake(495, self.frame.size.height - 300);
+    
+    [self addChild:wall5];
+    
+    SKSpriteNode *wall6 = [[SKSpriteNode alloc] initWithColor:[SKColor orangeColor] size:CGSizeMake(25, 500)];
+    wall6.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:wall6.size];
+    wall6.physicsBody.dynamic = NO;
+    wall6.position = CGPointMake(500,300);
+    
+    [self addChild:wall6];
+    
+    SKSpriteNode *wall7 = [[SKSpriteNode alloc] initWithColor:[SKColor orangeColor] size:CGSizeMake(25, 800)];
+    wall7.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:wall7.size];
+    wall7.physicsBody.dynamic = NO;
+    wall7.position = CGPointMake(500, self.frame.size.height - 300);
+    
+    [self addChild:wall7];
+    
+    SKSpriteNode *wall8 = [[SKSpriteNode alloc] initWithColor:[SKColor orangeColor] size:CGSizeMake(25, 800)];
+    wall8.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:wall8.size];
+    wall8.physicsBody.dynamic = NO;
+    wall8.position = CGPointMake(500, self.frame.size.height - 300);
+    
+    [self addChild:wall8];
+    
+    SKSpriteNode *wall9 = [[SKSpriteNode alloc] initWithColor:[SKColor orangeColor] size:CGSizeMake(80
+                                                                                                    , 25)];
+    wall9.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:wall9.size];
+    wall9.physicsBody.dynamic = NO;
+    wall9.position = CGPointMake(470, 200);
+    
+    [self addChild:wall9];
+    
+    SKSpriteNode *wall10 = [[SKSpriteNode alloc] initWithColor:[SKColor orangeColor] size:CGSizeMake(25, 320)];
+    wall10.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:wall10.size];
+    wall10.physicsBody.dynamic = NO;
+    wall10.position = CGPointMake(450, 200);
+    
+    [self addChild:wall10];
+    
+    SKSpriteNode *wall11 = [[SKSpriteNode alloc] initWithColor:[SKColor orangeColor] size:CGSizeMake(80, 50)];
+    wall11.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:wall11.size];
+    wall11.physicsBody.dynamic = NO;
+    wall11.position = CGPointMake(280, 600);
+    
+    [self addChild:wall11];
     
 }
-- (void)moveDotTo: (CGPoint) point
+- (CGPoint)getDirection: (CGPoint)point
 {
-    self.dot.position = point;
-}
-- (BOOL)isNearDot: (CGPoint) point
-{
-    CGFloat distance = [MazeScene distanceBetween:point and:self.dot.position];
-    if (distance <= 10) {
-        return  true;
-    }
-    return false;
-}
-+ (CGFloat)distanceBetween: (CGPoint) p1 and:(CGPoint)p2
-{
-    CGFloat xDist = p1.x - p2.x;
-    CGFloat yDist = p1.y - p2.y;
-    CGFloat distance = sqrt((xDist * xDist) + (yDist * yDist));
-    return distance;
+    CGFloat xDirection = point.x - self.dot.position.x;
+    CGFloat yDirection = point.y - self.dot.position.y;
+    
+    return CGPointMake(xDirection, yDirection);
 }
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     UITouch *touch = [touches anyObject];
     CGPoint touchPoint = [touch locationInNode:self];
-    CGFloat distance = [MazeScene distanceBetween:touchPoint and:self.dot.position];
-    CGFloat xDist = touchPoint.x - self.dot.position.x;
-    CGFloat angleFromDot = acosf(xDist/distance);
-
-    if (self.dot.position.y > touchPoint.y) {
-        self.physicsWorld.gravity = CGPointMake(cosf(angleFromDot), -1.0*
-                                                sinf(angleFromDot));
-    } else {
-        self.physicsWorld.gravity = CGPointMake(cosf(angleFromDot), sinf(angleFromDot));
-    }
+    
+    [self.dot.physicsBody applyForce: [self getDirection:touchPoint]];
 
 }
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
-
 {
-    UITouch *touch = [touches anyObject];
-    CGPoint touchPoint = [touch locationInNode:self];
-    CGFloat distance = [MazeScene distanceBetween:touchPoint and:self.dot.position];
-    CGFloat xDist = touchPoint.x - self.dot.position.x;
-    CGFloat angleFromDot = acosf(xDist/distance);
-    [self.dot.physicsBody applyForce: CGPointMake(2.0*cosf(angleFromDot), 2.0*sinf(angleFromDot))];
-    if (self.dot.position.y > touchPoint.y) {
-    self.physicsWorld.gravity = CGPointMake(cosf(angleFromDot), -1.0*sinf(angleFromDot));
-    } else {
-        self.physicsWorld.gravity = CGPointMake(cosf(angleFromDot), sinf(angleFromDot));
-    }
-    
+    [self touchesBegan:touches withEvent:event];
 }
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    self.physicsWorld.gravity = CGPointMake(0, 0);
-    self.dot.physicsBody.velocity = CGPointMake(0, 0);
-
+    [self touchesBegan:touches withEvent:event];
 }
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [self touchesEnded:touches withEvent:event];
+    [self touchesBegan:touches withEvent:event];
 }
 
+- (void)update:(NSTimeInterval)currentTime
+{
+    CGPoint velocity = self.dot.physicsBody.velocity;
+    velocity.x *= .9;
+    velocity.y *= .9;
+    
+    self.dot.physicsBody.velocity = velocity;
+}
 
 - (SKSpriteNode *)createDot
 {
-    SKSpriteNode *dot = [[SKSpriteNode alloc] initWithColor:[SKColor greenColor] size:CGSizeMake(10, 10)];
+    SKSpriteNode *dot = [[SKSpriteNode alloc] initWithColor:[SKColor greenColor] size:CGSizeMake(20, 20)];
     return dot;
 }
 @end
