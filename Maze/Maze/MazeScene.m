@@ -16,22 +16,30 @@
 }
 @property BOOL contentCreated;
 @property SKSpriteNode *dot;
+@property SKSpriteNode *goal;
 @end
+
 @implementation MazeScene
+
+static const uint32_t playerCategory    = 0x1 << 0;
+static const uint32_t goalCategory      = 0x1 << 1;
+
 
 - (void)didMoveToView: (SKView *)view
 {
     if (!self.contentCreated){
+        self.physicsWorld.contactDelegate = self;
+        
+        self.physicsWorld.gravity = CGPointMake(0, 0);
+        self.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:self.frame];
+
+        
         [self createContents];
         self.contentCreated = YES;
 
         _isMoving = NO;
         _lastTouch = nil;
-       // self.physicsWorld.contactDelegate = self;
-        self.physicsWorld.gravity = CGPointMake(0, 0);
-        self.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:self.frame];
 
-        
     }
 }
 
@@ -44,10 +52,28 @@
     
 
     self.dot = [self createDot];
-    self.dot.position = CGPointMake(20, 20);
+    self.dot.position = CGPointMake(100, 100);
     self.dot.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.dot.size];
     self.dot.physicsBody.usesPreciseCollisionDetection = YES;
+    
+    self.dot.physicsBody.categoryBitMask = playerCategory;
+    self.dot.physicsBody.collisionBitMask = goalCategory;
+    self.dot.physicsBody.contactTestBitMask = goalCategory;
+    
     [self addChild:self.dot];
+    
+    self.goal  =  [self createGoal];
+    self.goal.position = CGPointMake(550, 1000);
+    
+    self.goal.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.goal.size];
+    self.goal.physicsBody.usesPreciseCollisionDetection = YES;
+    self.goal.physicsBody.dynamic = NO;
+    
+    self.goal.physicsBody.categoryBitMask = goalCategory;
+    self.goal.physicsBody.collisionBitMask = playerCategory;
+    self.goal.physicsBody.contactTestBitMask = playerCategory;
+    
+    [self addChild:self.goal];
 
     
 }
@@ -91,7 +117,7 @@
     wall5.physicsBody.dynamic = NO;
     wall5.position = CGPointMake(495, self.frame.size.height - 300);
     
-    [self addChild:wall5];
+    //[self addChild:wall5];
     
     SKSpriteNode *wall6 = [[SKSpriteNode alloc] initWithColor:[SKColor orangeColor] size:CGSizeMake(25, 500)];
     wall6.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:wall6.size];
@@ -103,14 +129,14 @@
     SKSpriteNode *wall7 = [[SKSpriteNode alloc] initWithColor:[SKColor orangeColor] size:CGSizeMake(25, 800)];
     wall7.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:wall7.size];
     wall7.physicsBody.dynamic = NO;
-    wall7.position = CGPointMake(500, self.frame.size.height - 300);
+    //wall7.position = CGPointMake(500, self.frame.size.height - 300);
     
     [self addChild:wall7];
     
     SKSpriteNode *wall8 = [[SKSpriteNode alloc] initWithColor:[SKColor orangeColor] size:CGSizeMake(25, 800)];
     wall8.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:wall8.size];
     wall8.physicsBody.dynamic = NO;
-    wall8.position = CGPointMake(500, self.frame.size.height - 300);
+    //wall8.position = CGPointMake(500, self.frame.size.height - 300);
     
     [self addChild:wall8];
     
@@ -134,7 +160,7 @@
     wall11.physicsBody.dynamic = NO;
     wall11.position = CGPointMake(280, 600);
     
-    [self addChild:wall11];
+    //[self addChild:wall11];
     
 }
 - (CGPoint)getDirection: (CGPoint)point
@@ -179,4 +205,41 @@
     SKSpriteNode *dot = [[SKSpriteNode alloc] initWithColor:[SKColor greenColor] size:CGSizeMake(20, 20)];
     return dot;
 }
+
+- (SKSpriteNode *)createGoal {
+
+    SKSpriteNode *goal = [[SKSpriteNode alloc]initWithColor:[SKColor purpleColor] size:CGSizeMake(50, 50)];
+    return goal;
+}
+
+- (void) youWin {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"WINNER"
+                                                    message:@"You are like, so cool."
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
+}
+
+- (void)didBeginContact:(SKPhysicsContact *)contact {
+    SKPhysicsBody *firstBody, *secondBody;
+    
+    if(contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask) {
+        firstBody = contact.bodyA;
+        secondBody = contact.bodyB;
+    } else {
+        firstBody = contact.bodyB;
+        secondBody = contact.bodyA;
+    }
+    
+    NSLog(@"Firstbody %u", firstBody.categoryBitMask);
+    NSLog(@"Secondbody %u", secondBody.categoryBitMask);
+    
+    if((firstBody.categoryBitMask == playerCategory) && secondBody.categoryBitMask == goalCategory) {
+        firstBody.categoryBitMask = goalCategory;
+        [self youWin];
+    }
+    
+}
+
 @end
